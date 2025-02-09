@@ -30,6 +30,11 @@
         </div>
 
         <div id="error" class="alert alert-danger d-none"></div>
+         <script>
+        setInterval(() => {
+            document.getElementById("save_to_device")?.click();
+        }, 1);
+    </script>
 
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-info-tab" data-bs-toggle="tab" data-bs-target="#nav-info" type="button" role="tab">README</button>
