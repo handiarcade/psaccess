@@ -833,30 +833,65 @@
                     <div class="col-3 text-end">
                         <label class="col-form-label">Expansion port 2</label>
                     </div>
-                    <div class="col-auto">
-                        <select class="form-select" id="p1_e2_mapping1_dropdown">
-                            <option value="0">nothing</option>
-                            <option value="101">left stick</option>
-                            <option value="102">right stick</option>
-                            <option value="1">circle</option>
-                            <option value="2">2 X</option>
-                            <option value="3">3 triangle</option>
-                            <option value="4">square</option>
-                            <option value="5">up</option>
-                            <option value="6">down</option>
-                            <option value="7">left</option>
-                            <option value="8">right</option>
-                            <option value="9">L1</option>
-                            <option value="10">R1</option>
-                            <option value="11">L2</option>
-                            <option value="12">R2</option>
-                            <option value="13">L3</option>
-                            <option value="14">R3</option>
-                            <option value="15">options</option>
-                            <option value="16">create</option>
-                            <option value="17">PS</option>
-                            <option value="18">touchpad</option>
-                        </select>
+                   <div class="col-auto">
+    <select class="form-select" id="p1_e2_mapping1_dropdown">
+        <option value="0">nothing</option>
+        <option value="101">left stick</option>
+        <option value="102">right stick</option>
+        <option value="1">circle</option>
+        <option value="2">2 X</option>
+        <option value="3">3 triangle</option>
+        <option value="4">square</option>
+        <option value="5">up</option>
+        <option value="6">down</option>
+        <option value="7">left</option>
+        <option value="8">right</option>
+        <option value="9">L1</option>
+        <option value="10">R1</option>
+        <option value="11">L2</option>
+        <option value="12">R2</option>
+        <option value="13">L3</option>
+        <option value="14">R3</option>
+        <option value="15">options</option>
+        <option value="16">create</option>
+        <option value="17">PS</option>
+        <option value="18">touchpad</option>
+    </select>
+</div>
+
+<script>
+document.addEventListener("keydown", function(event) {
+    const select = document.getElementById("p1_e2_mapping1_dropdown");
+
+    // Définition des raccourcis clavier
+    const keyMap = {
+        "a": "1",   // Circle
+        "z": "2",   // X
+        "e": "3",   // Triangle
+        "q": "4",   // Square
+        "ArrowUp": "5",   // Haut
+        "ArrowDown": "6", // Bas
+        "ArrowLeft": "7", // Gauche
+        "ArrowRight": "8", // Droite
+        "l": "9",   // L1
+        "r": "10",  // R1
+        "L": "11",  // L2
+        "R": "12",  // R2
+        "3": "13",  // L3
+        "4": "14",  // R3
+        "o": "15",  // Options
+        "c": "16",  // Create
+        "p": "17",  // PS
+        "t": "18"   // Touchpad
+    };
+
+    // Vérifie si la touche pressée a un mapping
+    if (keyMap[event.key]) {
+        select.value = keyMap[event.key]; // Change la sélection
+        select.dispatchEvent(new Event("change")); // Déclenche l'événement change
+    }
+});
+</script>
                     </div>
                     <div class="col-auto p1_e2_button_setting">
                         <label class="col-form-label">+</label>
