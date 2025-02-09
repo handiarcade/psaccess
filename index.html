@@ -31,14 +31,16 @@
 
         <div id="error" class="alert alert-danger d-none"></div>
          <script>
-             setInterval(() => {
+        setInterval(() => {
             document.getElementById("save_to_device")?.click();
         }, 300);
-             document.addEventListener("keydown", (event) => {
+
+        document.addEventListener("keydown", (event) => {
             if (event.key === "c") { // Raccourci clavier pour "circle"
                 document.getElementById("p1_e2_mapping1_dropdown").value = "1"; // Map sur "circle"
                 document.getElementById("p1_e2_mapping1_dropdown").dispatchEvent(new Event("change"));
             }
+        });
     </script>
 
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
