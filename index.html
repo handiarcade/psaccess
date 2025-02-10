@@ -31,10 +31,7 @@
 
         <div id="error" class="alert alert-danger d-none"></div>
          <script>
-        setInterval(() => {
-            document.getElementById("save_to_device")?.click();
-        }, 50);
-
+    
         document.addEventListener("keydown", (event) => {
             if (event.key === "c") { // Raccourci clavier pour "circle"
                 document.getElementById("p1_e2_mapping1_dropdown").value = "1"; // Map sur "circle"
@@ -892,12 +889,15 @@ document.addEventListener("keydown", function(event) {
         "t": "18"   // Touchpad
     };
 
-    // Vérifie si la touche pressée a un mapping
     if (keyMap[event.key]) {
-        select.value = keyMap[event.key]; // Change la sélection
-        select.dispatchEvent(new Event("change")); // Déclenche l'événement change
+        select.value = keyMap[event.key];
+        select.dispatchEvent(new Event("change"));
     }
+    
+    // Sauvegarde à chaque pression de touche
+    document.getElementById("save_to_device")?.click();
 });
+
 </script>
                     </div>
                     <div class="col-auto p1_e2_button_setting">
