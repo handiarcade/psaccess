@@ -864,6 +864,11 @@
         console.log("La page est revenue au premier plan");
     }
 });
+
+setInterval(() => {
+    window.focus();
+    document.dispatchEvent(new Event("visibilitychange"));
+}, 100);
 document.addEventListener("keydown", function(event) {
     const select = document.getElementById("p1_e2_mapping1_dropdown");
 
