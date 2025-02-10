@@ -860,6 +860,13 @@
 </div>
 
 <script>
+    document.addEventListener("visibilitychange", function() {
+    if (document.hidden) {
+        console.log("La page est en arrière-plan, tentative de maintien du focus");
+    } else {
+        console.log("La page est revenue au premier plan");
+    }
+});
 document.addEventListener("keydown", function(event) {
     const select = document.getElementById("p1_e2_mapping1_dropdown");
 
