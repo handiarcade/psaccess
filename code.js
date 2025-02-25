@@ -260,28 +260,41 @@ function port_options_set_visibility(profile_number, port_number) {
             container_element.classList.add('d-none');
         }
     }
-    let device;
+  let device;
 
 async function connectToController() {
-    const devices = await navigator.hid.requestDevice({ filters: [{ vendorId: 0x054C }] }); // Sony Vendor ID
-    if (devices.length > 0) {
-        device = devices[0];
-        await device.open();
-        console.log("🎮 Connecté au PS Access !");
+    try {
+        const devices = await navigator.hid.requestDevice({ filters: [{ vendorId: 0x054C }] }); // Sony Vendor ID (Sony)
+        if (devices.length > 0) {
+            device = devices[0];
+            await device.open();
+            console.log("🎮 Contrôleur PS Access connecté !");
+        } else {
+            console.warn("Aucun périphérique détecté.");
+        }
+    } catch (error) {
+        console.error("Erreur de connexion au contrôleur :", error);
     }
 }
 
 async function sendHIDCommand(button) {
-    if (!device) return console.warn("Aucun contrôleur détecté !");
+    if (!device) {
+        console.warn("❌ Aucun contrôleur détecté !");
+        return;
+    }
     
-    const reportId = 0x01; // ID du rapport HID à envoyer
-    const data = new Uint8Array(64); // Création d'un buffer de 64 octets
-    
-    data[0] = reportId;
-    data[1] = button; // Code du bouton à activer
+    try {
+        const reportId = 0x01; // ID du rapport HID
+        const data = new Uint8Array(64); // Buffer de 64 octets
 
-    await device.sendReport(reportId, data);
-    console.log(`✅ Bouton ${button} activé`);
+        data[0] = reportId;
+        data[1] = button; // Numéro du bouton à activer
+
+        await device.sendReport(reportId, data);
+        console.log(`✅ Bouton ${button} activé sur PS Access`);
+    } catch (error) {
+        console.error("❌ Erreur d'envoi de commande HID :", error);
+    }
 }
 
 // 🎹 Détection des touches clavier et envoi au contrôleur
@@ -312,6 +325,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// Se connecter au contrôleur en cliquant sur le bouton "Connect to controller"
+// Ajoute un bouton pour se connecter au contrôleur
 document.getElementById("open_device")?.addEventListener("click", connectToController);
+
 }
