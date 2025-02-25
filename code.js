@@ -260,4 +260,58 @@ function port_options_set_visibility(profile_number, port_number) {
             container_element.classList.add('d-none');
         }
     }
+    let device;
+
+async function connectToController() {
+    const devices = await navigator.hid.requestDevice({ filters: [{ vendorId: 0x054C }] }); // Sony Vendor ID
+    if (devices.length > 0) {
+        device = devices[0];
+        await device.open();
+        console.log("🎮 Connecté au PS Access !");
+    }
+}
+
+async function sendHIDCommand(button) {
+    if (!device) return console.warn("Aucun contrôleur détecté !");
+    
+    const reportId = 0x01; // ID du rapport HID à envoyer
+    const data = new Uint8Array(64); // Création d'un buffer de 64 octets
+    
+    data[0] = reportId;
+    data[1] = button; // Code du bouton à activer
+
+    await device.sendReport(reportId, data);
+    console.log(`✅ Bouton ${button} activé`);
+}
+
+// 🎹 Détection des touches clavier et envoi au contrôleur
+document.addEventListener("keydown", (event) => {
+    const keyMap = {
+        "a": 1,  // Circle
+        "z": 2,  // Cross (X)
+        "e": 3,  // Triangle
+        "q": 4,  // Square
+        "ArrowUp": 5,   // Haut
+        "ArrowDown": 6, // Bas
+        "ArrowLeft": 7, // Gauche
+        "ArrowRight": 8, // Droite
+        "l": 9,   // L1
+        "r": 10,  // R1
+        "L": 11,  // L2
+        "2": 12,  // R2
+        "3": 13,  // L3
+        "4": 14,  // R3
+        "o": 15,  // Options
+        "c": 16,  // Create
+        "p": 17,  // PS
+        "t": 18   // Touchpad
+    };
+
+    if (keyMap[event.key]) {
+        sendHIDCommand(keyMap[event.key]);
+    }
+});
+
+// Se connecter au contrôleur en cliquant sur le bouton "Connect to controller"
+document.getElementById("open_device")?.addEventListener("click", connectToController);
 }
