@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("open_device").addEventListener("click", open_device);
     document.getElementById("load_from_device").addEventListener("click", load_from_device);
     document.getElementById("save_to_device").addEventListener("click", save_to_device);
+    document.getElementById("download_json").addEventListener("click", download_json);
 
     device_buttons_set_disabled_state(true);
 
